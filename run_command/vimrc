@@ -1,0 +1,119 @@
+"
+"   @file vimrc
+"
+"   @autuor Xiaoshuang LU
+"
+"   @section LICENSE
+"
+"   Copyright (C) 2018 Xiaoshuang LU
+"
+"   All rights reserved.
+"
+
+" compatibility between vi and vim
+"set compatible
+
+" show tab as ^I
+" $ is displayed at the end of each line
+set list
+
+" tab will be displayed as "|---" (with more or less "-")
+" trailing white space will be displayed as "."
+set listchars=tab:\|-,trail:.
+
+" auto new line
+set wrap
+
+" fileformat
+set fileformat=unix
+
+" show line number
+set number
+
+" background color
+set background=dark
+
+" brace match
+set showmatch
+
+" current line
+set cursorline
+
+" current column
+set cursorcolumn
+
+" indent
+set autoindent
+set smartindent
+
+" insert or delete # spaces
+set softtabstop=4
+
+" tab char number
+set tabstop=4
+
+" replace tab with space
+set expandtab
+
+set shiftwidth=4
+
+" do not make backup
+set nobackup
+
+" show rownum and colmun of cursor
+set ruler
+
+" turn off error bell
+set noerrorbells
+
+" check file type
+filetype on
+
+" highlight syntax
+syntax on
+
+" status line
+set laststatus=2
+
+"encode
+"set enc=utf-8
+"set fencs=utf-8,gb2312,gbk
+
+set langmenu=zh_CN.UTF-8
+set helplang=cn
+
+" match delay (ms)
+set matchtime=5
+
+" how to split the window
+set splitbelow
+set splitright
+
+" User defined commands must start with an uppercase letter.
+
+" Format code
+function Format_code()
+    " save first
+    execute "write"
+    execute "!indent -i4 -bad -bap -cdb -sc -bli0 -ncdw -cli4 -npcs -nbs -nprs -di1 -nbc -bfda -bfde -bls -blf -nbbo -nsaf -nsai -nsaw -ts4 -nut -ncs % -o %"
+    " reload the file
+    execute "edit!"
+endfunction
+:command Format call Format_code()
+
+" remove trailing whitespace
+" \s ' ' or '\t'
+" \+ one or more occurrences
+" $ at the end of the line
+:command Trail %s/\s\+$//g
+
+" replace tab with space
+:command Tabify %s/\t/    /g
+
+" represent a new line with \n
+" remove \r
+:command Return %s/\r//g
+
+" auto read when a file is changed from the outside
+" e! or edit! to reload the current file
+set autoread
